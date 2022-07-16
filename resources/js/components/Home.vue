@@ -86,6 +86,8 @@
                                 <div>{{video.video.lengthText}} | {{video.video.channelName}}</div>
                             </div>
                         </div>
+                        <button class="btn btn-dark btn-lg mb-5" type="button" @click="getNextVideos()">Next</button>
+                        <br><br>
                     </div>
                 </div>
                 
@@ -111,7 +113,9 @@ export default {
             videos: [],
             videoUrl: null,
             loader: false,
-            startVideos: true
+            startVideos: true,
+            next: null,
+            v: []
         }
     },
     components: {
@@ -122,12 +126,12 @@ export default {
             this.startVideos = false
             this.loader = true
             if(!this.query) this.query = "Search";
-            const options = {
+            let options = {
                 method: 'GET',
                 url: 'https://youtube-search-and-download.p.rapidapi.com/search',
                 params: { query: this.query, hl: 'en', upload_date: 'y', type: 'v', sort: 'v'},
                 headers: {
-                    'X-RapidAPI-Key': '2a8f21215amsh48d4f97a647ab3bp1fe2f7jsn44db1900cee3',
+                    'X-RapidAPI-Key': '56abf6c3a7msh886dd817de618e8p1ff469jsn06fe796817cc',
                     'X-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com'
                 }
             };
@@ -135,8 +139,8 @@ export default {
             axios.request(options).then((response) => {
                 this.showSearch = true
                 this.loader = false
+                this.next = response.data.next
                 this.videos = Object.freeze(response.data.contents)
-                console.log(this.videos);
             }).catch(function (error) {
                 console.error(error);
             });
@@ -172,6 +176,30 @@ export default {
         showVideo(video) {
             this.videoUrl = 'https://www.youtube.com/embed/'+video.videoId
             this.$refs.childComponentRef.showModal( );
+        },
+        getNextVideos() {        
+            console.log('next')
+            this.loader = true
+            this.showSearch = false
+            window.scrollTo(0, 0);
+            let options = {
+                method: 'GET',
+                url: 'https://youtube-search-and-download.p.rapidapi.com/search',
+                params: { next: this.next },
+                    headers: {
+                        'X-RapidAPI-Key': '56abf6c3a7msh886dd817de618e8p1ff469jsn06fe796817cc',
+                        'X-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com'
+                    }
+            };
+
+            axios.request(options).then((response) => {
+                this.next = response.data.next
+                this.videos = Object.freeze(response.data.contents)
+                this.showSearch = true
+                this.loader = false 
+            }).catch(function (error) {
+                console.error(error);
+            });    
         }
     }
 }

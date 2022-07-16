@@ -102,7 +102,7 @@ import { ContentLoader } from 'vue-content-loader';
                 url: 'https://youtube-search-and-download.p.rapidapi.com/trending',
                 params: {type: this.type, hl: 'en', gl: 'US'},
                 headers: {
-                    'X-RapidAPI-Key': '2a8f21215amsh48d4f97a647ab3bp1fe2f7jsn44db1900cee3',
+                    'X-RapidAPI-Key': '56abf6c3a7msh886dd817de618e8p1ff469jsn06fe796817cc',
                     'X-RapidAPI-Host': 'youtube-search-and-download.p.rapidapi.com'
                 }
                 };
