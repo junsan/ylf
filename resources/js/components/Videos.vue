@@ -1,11 +1,10 @@
 <template>
     <div class="row">
         <video-component :videoUrl="videoUrl" ref="childComponentRef"></video-component>
-        <h4 class="mt-4">Trending</h4>
-        <div v-for="video in videos" :key="video.videoId" class="col-xl-2">
-            <div class="card mb-4">
+        <div v-for="video in videos" :key="video.videoId" class="col-xl-2 col-md-4 col-sm-6">
+            <div class="card mb-4" style="border: none">
                 <div class="card-body">
-                    <img :src="video.video.thumbnails[0].url" height="115">
+                    <a style="color: black; text-decoration: none;" @click="showVideo(video.video)" href="#"><img :src="video.video.thumbnails[0].url" height="115"></a>
                     <a style="color: black; text-decoration: none;" @click="showVideo(video.video)" href="#"><h6 class="mt-2">{{video.video.title}}</h6></a>
                     <div>{{video.video.channelName}}</div>
                     <div>{{video.video.viewCountText}}</div>

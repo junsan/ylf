@@ -9,6 +9,7 @@ import Index from './components/Index.vue';
 import Videos from './components/Videos.vue';
 import Home from './components/Home.vue';
 import Video from './components/Video.vue';
+import Search from './components/Search.vue';
 
 let app = createApp({})
 
@@ -16,6 +17,7 @@ app.component('home-component', Home);
 app.component('videos-component', Videos);
 app.component('index-component', Index);
 app.component('video-component', Video);
+app.component('search-component', Search);
 
 app.use(VueUniversalModal, {
     teleportTarget: '#modals',
